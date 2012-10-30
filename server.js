@@ -8,11 +8,12 @@ var state = {
 }
 
 var actions = {
-    test:  function(a1, a2) { },
-    create: function(request, response) {
+    create: function(request, response, name1, name2) {
         var game = {
             id: state.nextId++,
-            rounds: []
+            rounds: [],
+            name1: name1,
+            name2: name2
         };
         state.games.push(game);
         response.write(JSON.stringify(game));
