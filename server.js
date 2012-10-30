@@ -2,9 +2,23 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
-var state = {
-    nextId: 0,
-    games: {}
+var state;
+
+(function getState() {
+    fs.readFile('state',function(err, data) {
+        if (err) {
+            state = {
+                nextId: 0,
+                games: {}
+            };
+        } else {
+            state = JSON.parse(data);
+        }
+    });
+})();
+
+function saveState() {
+    fs.writeFile('state', JSON.stringify(state));
 }
 
 var actions = {
@@ -16,6 +30,7 @@ var actions = {
             name2: name2
         };
         state.games[game.id] = game;
+        saveState();
         response.write(JSON.stringify(game));
         response.end();
     },
