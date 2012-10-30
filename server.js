@@ -2,14 +2,33 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
+var state = {
+    nextId: 0,
+    games: []
+}
+
+var actions = {
+    test:  function(a1, a2) { },
+    create: function(request, response) {
+        var game = {
+            id: state.nextId++,
+            rounds: []
+        };
+        state.games.push(game);
+        response.write(JSON.stringify(game));
+        response.end();
+    }
+};
+
 http.createServer(function(request, response) {
     // Map urls straight to functions with those names.
     var parts = url.parse(request.url).pathname.split('/');
     var action = parts[1];
     var f = actions[action];
     if (f) {
-        console.log(action + ' found');
-        actions[action].apply(actions[action], parts.slice(2));
+        args = parts.slice(2);
+        args.unshift(request, response);
+        actions[action].apply(actions[action], args);
     } else {
         var filename = action || 'index.html';
         extension = filename.split('.')[1];
@@ -18,17 +37,10 @@ http.createServer(function(request, response) {
                 response.writeHead(404, {"Content-Type": "text/html"});
                 response.write("404 Not Found");
             } else {
-                response.writeHead(200, {"Content-Type": { "html": "text/html", "js": "text/javascript" }[extension]});
-                response.write(+data);
+                response.writeHead(200, {"Content-Type": { "html": "text/html", "js": "text/javascript", "css": "text/css" }[extension]});
+                response.write(''+data);
             }
             response.end();
         });
     }
 }).listen(8080, '0.0.0.0');
-
-var actions = {
-    test:  function(a1, a2) {
-        console.log(a1);
-        console.log(a2);
-    }
-};

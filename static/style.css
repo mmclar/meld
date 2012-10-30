@@ -1,0 +1,4 @@
+.round .opponent { display:inline-block; width:200px; background-color:orange; float:left; }
+.round .self { float:left; }
+
+ul { list-style-type:none; }

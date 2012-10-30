@@ -1,5 +1,18 @@
 <html>
+  <head>
+    <link rel='stylesheet' href='/style.css'>
   <body>
-    This is the home page.
+    <h1>Mind Meld</h1>
+    Create a new game.<br />
+    Your name: <input id='self-name' type='text' /><br />
+    Partner Name: <input id='partner-name' type='text' /><br />
+    <button class='new-game'>Create</button>
+    <script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
+    <script>
+      $(document).ready(function() {
+        alert('abc');
+        $('.new-game').click(function() { alert('hey!'); });
+      });
+    </script>
   </body>
 </html>
