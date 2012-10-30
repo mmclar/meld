@@ -4,7 +4,7 @@ var fs = require('fs');
 
 var state = {
     nextId: 0,
-    games: []
+    games: {}
 }
 
 var actions = {
@@ -15,7 +15,12 @@ var actions = {
             name1: name1,
             name2: name2
         };
-        state.games.push(game);
+        state.games[game.id] = game;
+        response.write(JSON.stringify(game));
+        response.end();
+    },
+    gameData: function(request, response, id) {
+        game = state.games[id];
         response.write(JSON.stringify(game));
         response.end();
     }
