@@ -28,6 +28,7 @@ http.createServer(function(request, response) {
     var f = actions[action];
     if (f) {
         args = parts.slice(2);
+        args = args.map(decodeURIComponent);
         args.unshift(request, response);
         actions[action].apply(actions[action], args);
     } else {
