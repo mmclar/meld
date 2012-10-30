@@ -34,15 +34,26 @@ http.createServer(function(request, response) {
     } else {
         var filename = action || 'index.html';
         extension = filename.split('.')[1];
-        fs.readFile('static/' + filename, function(err, data){
-            if (err) {
-                response.writeHead(404, {"Content-Type": "text/html"});
-                response.write("404 Not Found");
-            } else {
-                response.writeHead(200, {"Content-Type": { "html": "text/html", "js": "text/javascript", "css": "text/css" }[extension]});
-                response.write(''+data);
-            }
+        var sendFile = function(data) {
+            response.writeHead(200, {"Content-Type": { "html": "text/html", "js": "text/javascript", "css": "text/css" }[extension]});
+            response.write(''+data);
             response.end();
+        };
+        filename = 'static/' + filename;
+        fs.readFile(filename, function(err, data){
+            if (err) {
+                filename += '.html';
+                fs.readFile(filename, function(err, data) {
+                    if (err) {
+                        response.writeHead(404, {"Content-Type": "text/html"});
+                        response.write("404 Not Found");
+                        response.end();
+                    }
+                    sendFile(data);
+                });
+            } else {
+                sendFile(data);
+            }
         });
     }
 }).listen(8080, '0.0.0.0');

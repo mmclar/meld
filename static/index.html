@@ -11,8 +11,9 @@
     <script>
       $(document).ready(function() {
         $('.new-game').click(function() {
-          $.get('/create/' + $('#name1').val() + '/' + $('#name2').val(), function(data) {
-            alert(data);
+          $.getJSON('/create/' + $('#name1').val() + '/' + $('#name2').val(), function(data) {
+            var id = data['id'];
+            window.location.href = '/game/' + id;
           });
         });
       });
