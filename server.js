@@ -22,12 +22,12 @@ function saveState() {
 }
 
 var actions = {
-    create: function(request, response, name1, name2) {
+    create: function(request, response, p1, p2) {
         var game = {
             id: state.nextId++,
-            rounds: [],
-            name1: name1,
-            name2: name2
+            rounds: [ { p1: 'p1guess', p2: 'p2guess' } ],
+            p1: p1,
+            p2: p2
         };
         state.games[game.id] = game;
         saveState();

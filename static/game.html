@@ -3,17 +3,19 @@
     <link rel='stylesheet' href='/style.css'>
   <body>
     <h1>Mind Meld</h1>
+    <h2 class='game-title'><span class='p1'></span> vs. <span class='p2'></span></h2>
     <div class='game'>
-      <ul>
+      <ul class='round-list'>
       </ul>
     </div>
     <div class='templates' style='display:none;'>
       <li class='round'>
-        <div class='opponent'><span class='guess'>opponent_guess</span></div>
-        <div class='self'><input class='guess' /></div>
+        <div class='p1'><span class='guess'></span></div>
+        <div class='p2'><span class='guess'></span></div>
         <button>Meld</button>
       </li>
     </div>
-    <script src='game.js'></script>
+    <script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
+    <script src='/game.js'></script>
   </body>
 </html>
