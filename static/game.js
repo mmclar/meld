@@ -1,4 +1,5 @@
-var gameId;
+var gameId,
+    me;
 
 $(document).ready(function() {
     gameOver = false;
@@ -6,7 +7,16 @@ $(document).ready(function() {
     var parts = window.location.href.split('/');
     gameId = parts[parts.length-1];
 
-    update();
+    $.getJSON('/gameData/' + gameId, function(game) {
+        $(['p1', 'p2']).each(function(k, v) {
+            $('.player-choice a.' + v).text(game[v]);
+        });
+        $('.player-choice a').click(function(e) {
+            me = $(e.target).hasClass('p1') ? 'p1' : 'p2';
+            $('.player-choice').hide();
+            update();
+        });
+    });
 });
 
 function update() {
